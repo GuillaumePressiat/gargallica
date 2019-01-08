@@ -107,10 +107,12 @@ parse_extraRecordData <- function(x){
 xml2::xml_find_all(tot, ".//srw:extraRecordData")[x] %>% 
   xml_to_df() %>% 
   select(-.name) %>% 
-  select(`d1:nqamoyen`) %>% 
+  #select(`d1:nqamoyen`) %>% 
+  select(`nqamoyen`) %>% 
   unnest() %>% 
   mutate(recordId = 1:nrow(.)) %>% 
-  mutate(nqamoyen = stringr::str_remove(.value, 'd1:')) %>%
+  #mutate(nqamoyen = stringr::str_remove(.value, 'd1:')) %>%
+  mutate(nqamoyen = .value) %>%
   select(recordId, nqamoyen)
 }
 
@@ -148,7 +150,7 @@ texteBrut <- function(i){
 
 }
 
-texteBrut(5422)
+texteBrut(6953)
 
 deja_ok <- list.files('data/docs_ocr/') %>% 
   stringr::str_remove('\\.csv') %>% 
